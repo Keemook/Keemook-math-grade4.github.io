@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Math Arcade ป.4</title>
   <style>
-    /* 1. Animated Cute Background */
+    /* Animated Cute Background */
     body {
       margin: 0;
       padding: 0;
@@ -250,7 +250,6 @@
         <div class="question-text" id="question-text">คำนวณผลบวก: ... = ?</div>
         <div class="monster-container">
           <span class="monster-icon">👾</span>
-          <!-- ซ่อนเฉลยแล้ว เปลี่ยนเป็นชื่อและ HP -->
           <span id="monster-text">ปีศาจดาวตก (HP 100%)</span>
         </div>
       </div>
@@ -264,7 +263,7 @@
     <div class="game-over-box" id="game-over-view">
       <h2>🎉 สรุปผลการเล่น!</h2>
       <p style="font-size: 1.25rem;">คุณทำได้ <span id="final-score" style="color:#6366f1; font-weight:bold;">0</span> / 5 คะแนน</p>
-      <button class="restart-btn" onclick="resetGame()">🔄 เล่นใหม่อีกครั้ง (สุ่มโจทย์ใหม่)</button>
+      <button class="restart-btn" onclick="resetGame()">🔄 เล่นใหม่อีกครั้ง (สุ่มโจทย์ใหม่ไม่ซ้ำ)</button>
     </div>
   </div>
 
@@ -274,29 +273,44 @@
     let totalScore = 14;
     let questionsList = [];
 
+    // ตัวแปรสำหรับบันทึกโจทย์ที่เคยออกไปแล้ว ป้องกันการออกซ้ำทุกเกมย่อย
+    const usedQuestions = new Set();
+
     const monsterNames = ["ปีศาจดาวตก", "ปีศาจสายฟ้า", "ปีศาจวายุ", "ปีศาจไฟเยอร์", "ปีศาจคริสตัล"];
 
-    // 2. ฟังก์ชันสุ่มโจทย์ใหม่ทั้งหมด
     function generateRandomQuestions(count = 5) {
       const questions = [];
-      for (let i = 0; i < count; i++) {
-        const isAddition = Math.random() > 0.4; // สุ่มบวกหรือลบ
-        let num1, num2, correctAnswer, qText;
+      let attempts = 0; // ตัวนับกันวนลูปไม่จบ
+
+      while (questions.length < count && attempts < 1000) {
+        attempts++;
+        const isAddition = Math.random() > 0.4;
+        let num1, num2, correctAnswer, qText, questionKey;
 
         if (isAddition) {
-          num1 = Math.floor(Math.random() * 45 + 10) * 10000; // สุ่มหลักหมื่น-แสน
+          num1 = Math.floor(Math.random() * 45 + 10) * 10000;
           num2 = Math.floor(Math.random() * 25 + 5) * 5000;
           correctAnswer = num1 + num2;
+          questionKey = `ADD_${num1}_${num2}`;
           qText = `คำนวณผลบวก: ${num1.toLocaleString()} + ${num2.toLocaleString()} = ?`;
         } else {
           num1 = Math.floor(Math.random() * 40 + 20) * 10000;
           num2 = Math.floor(Math.random() * 15 + 5) * 10000;
           if (num1 < num2) [num1, num2] = [num2, num1];
           correctAnswer = num1 - num2;
+          questionKey = `SUB_${num1}_${num2}`;
           qText = `คำนวณผลลบ: ${num1.toLocaleString()} - ${num2.toLocaleString()} = ?`;
         }
 
-        // สุ่มสร้างตัวเลือกหลอก 3 ตัวที่ไม่ซ้ำกับเฉลย
+        // เช็คว่าโจทย์ข้อนี้เคยใช้ไปแล้วหรือยัง ถ้าเคยใช้แล้วให้สุ่มใหม่
+        if (usedQuestions.has(questionKey)) {
+          continue;
+        }
+
+        // บันทึกว่าโจทย์นี้ถูกใช้งานแล้ว
+        usedQuestions.add(questionKey);
+
+        // สุ่มตัวเลือกหลอก 3 ตัวที่ไม่ซ้ำกับเฉลย
         const choicesSet = new Set([correctAnswer]);
         const variations = [10000, -10000, 20000, -20000, 5000, -5000, 1000, -1000];
 
@@ -308,16 +322,16 @@
           }
         }
 
-        // สุ่มสลับตำแหน่งตัวเลือก (Shuffle)
         const options = Array.from(choicesSet).sort(() => Math.random() - 0.5);
 
         questions.push({
           question: qText,
           correctAnswer: correctAnswer,
           options: options,
-          monster: `${monsterNames[i % monsterNames.length]} (HP 100%)`
+          monster: `${monsterNames[questions.length % monsterNames.length]} (HP 100%)`
         });
       }
+
       return questions;
     }
 
@@ -368,7 +382,7 @@
       document.getElementById('game-view').style.display = 'block';
       document.getElementById('game-over-view').style.display = 'none';
       
-      // สุ่มชุดโจทย์ใหม่ทุกครั้งที่กดเริ่มใหม่/เล่นใหม่
+      // สุ่มชุดโจทย์ใหม่ที่การันตีว่าไม่ซ้ำกับเกมย่อยที่ผ่านๆ มา
       questionsList = generateRandomQuestions(5);
       loadQuestion();
     }
