@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Math Arcade ป.4</title>
+  <title>Math Arcade ป.4 - Full Edition</title>
   <style>
     /* Animated Cute Background */
     body {
@@ -26,29 +26,18 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Floating Bubbles in Background */
+    /* Background Floating Bubbles */
     .bg-bubbles {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      overflow: hidden;
-      pointer-events: none;
-      margin: 0;
-      padding: 0;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 0; overflow: hidden; pointer-events: none;
+      margin: 0; padding: 0;
     }
 
     .bubble {
-      position: absolute;
-      list-style: none;
-      display: block;
-      width: 20px;
-      height: 20px;
-      background: rgba(255, 255, 255, 0.45);
-      bottom: -100px;
-      border-radius: 50%;
+      position: absolute; list-style: none; display: block;
+      width: 20px; height: 20px; background: rgba(255, 255, 255, 0.45);
+      bottom: -100px; border-radius: 50%;
       animation: floatUp 15s infinite linear;
     }
 
@@ -66,12 +55,9 @@
 
     /* Game Container Card */
     .game-card {
-      position: relative;
-      z-index: 10;
-      width: 90%;
-      max-width: 620px;
-      background: #ffffff;
-      border-radius: 24px;
+      position: relative; z-index: 10;
+      width: 90%; max-width: 620px;
+      background: #ffffff; border-radius: 24px;
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
       overflow: hidden;
     }
@@ -79,79 +65,75 @@
     /* Header Bar */
     .header-bar {
       background: linear-gradient(90deg, #5c6bc0, #7e57c2);
-      color: white;
-      padding: 16px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      color: white; padding: 16px 24px;
+      display: flex; justify-content: space-between; align-items: center;
     }
 
-    .header-title {
-      font-size: 1.25rem;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .header-stats {
-      display: flex;
-      gap: 10px;
-    }
+    .header-title { font-size: 1.25rem; font-weight: bold; display: flex; align-items: center; gap: 8px; }
+    .header-stats { display: flex; gap: 10px; }
 
     .badge {
       background: rgba(255, 255, 255, 0.25);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      backdrop-filter: blur(4px);
+      padding: 6px 14px; border-radius: 20px;
+      font-size: 0.9rem; backdrop-filter: blur(4px);
     }
+
+    .home-btn {
+      background: rgba(255, 255, 255, 0.3); border: none;
+      color: white; padding: 6px 14px; border-radius: 20px;
+      cursor: pointer; font-weight: bold; font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+    .home-btn:hover { background: rgba(255, 255, 255, 0.5); }
+
+    /* Home Menu View */
+    .menu-view { padding: 30px 24px; text-align: center; }
+    .menu-title { font-size: 1.5rem; color: #334155; margin-bottom: 20px; font-weight: bold; }
+    
+    .game-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+
+    .menu-card {
+      background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 18px;
+      padding: 20px 12px; cursor: pointer; transition: all 0.25s ease;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .menu-card:hover {
+      border-color: #7e57c2; background: #f3e8ff; transform: translateY(-4px);
+      box-shadow: 0 8px 15px rgba(126, 87, 194, 0.15);
+    }
+    .menu-card .icon { font-size: 2.2rem; }
+    .menu-card .name { font-weight: bold; color: #1e293b; font-size: 1.05rem; }
 
     /* Status Bar */
     .status-bar {
-      background: #f1f5f9;
-      margin: 16px 20px 0 20px;
-      padding: 10px 16px;
-      border-radius: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: #334155;
-      font-weight: 600;
+      background: #f1f5f9; margin: 16px 20px 0 20px;
+      padding: 10px 16px; border-radius: 14px;
+      display: flex; justify-content: space-between; align-items: center;
+      color: #334155; font-weight: 600;
     }
 
     /* Question Box */
     .question-box {
-      margin: 16px 20px;
-      padding: 28px 20px;
-      background: #f8fafc;
-      border: 2px solid #e2e8f0;
-      border-radius: 20px;
+      margin: 16px 20px; padding: 24px 20px;
+      background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 20px;
       text-align: center;
     }
 
     .question-text {
-      font-size: 1.35rem;
-      font-weight: bold;
-      color: #1e293b;
-      margin-bottom: 16px;
+      font-size: 1.25rem; font-weight: bold; color: #1e293b; margin-bottom: 16px; min-height: 50px;
+      display: flex; align-items: center; justify-content: center;
     }
 
     .monster-container {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: #ffffff;
-      padding: 8px 18px;
-      border-radius: 30px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-      color: #e11d48;
-      font-weight: bold;
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #ffffff; padding: 8px 18px; border-radius: 30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); color: #e11d48; font-weight: bold;
     }
 
     .monster-icon {
-      font-size: 1.6rem;
-      display: inline-block;
+      font-size: 1.6rem; display: inline-block;
       animation: bounce 2s infinite ease-in-out;
     }
 
@@ -162,57 +144,33 @@
 
     /* Options Grid */
     .options-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
       padding: 0 20px 24px 20px;
     }
 
     .option-btn {
-      background: #ffffff;
-      border: 2px solid #cbd5e1;
-      border-radius: 16px;
-      padding: 16px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #1e293b;
-      cursor: pointer;
-      transition: all 0.2s ease;
+      background: #ffffff; border: 2px solid #cbd5e1; border-radius: 16px;
+      padding: 16px; font-size: 1.15rem; font-weight: bold; color: #1e293b;
+      cursor: pointer; transition: all 0.2s ease;
       box-shadow: 0 2px 5px rgba(0,0,0,0.03);
     }
 
     .option-btn:hover {
-      border-color: #6366f1;
-      background: #f0f3ff;
-      transform: translateY(-2px);
-    }
-
-    .option-btn:active {
-      transform: translateY(0);
+      border-color: #6366f1; background: #f0f3ff; transform: translateY(-2px);
     }
 
     /* Game Over View */
-    .game-over-box {
-      padding: 40px 20px;
-      text-align: center;
-      display: none;
-    }
-
+    .game-over-box { padding: 40px 20px; text-align: center; display: none; }
     .restart-btn {
-      background: #10b981;
-      color: white;
-      border: none;
-      padding: 12px 28px;
-      font-size: 1.1rem;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-top: 16px;
-      transition: background 0.2s;
+      background: #10b981; color: white; border: none;
+      padding: 12px 28px; font-size: 1.1rem; border-radius: 12px;
+      cursor: pointer; font-weight: bold; margin-top: 16px; margin-right: 8px;
     }
-
-    .restart-btn:hover {
-      background: #059669;
+    .restart-btn:hover { background: #059669; }
+    .secondary-btn {
+      background: #64748b; color: white; border: none;
+      padding: 12px 28px; font-size: 1.1rem; border-radius: 12px;
+      cursor: pointer; font-weight: bold; margin-top: 16px;
     }
   </style>
 </head>
@@ -220,12 +178,8 @@
 
   <!-- Floating Background Elements -->
   <ul class="bg-bubbles">
-    <li class="bubble"></li>
-    <li class="bubble"></li>
-    <li class="bubble"></li>
-    <li class="bubble"></li>
-    <li class="bubble"></li>
-    <li class="bubble"></li>
+    <li class="bubble"></li><li class="bubble"></li><li class="bubble"></li>
+    <li class="bubble"></li><li class="bubble"></li><li class="bubble"></li>
   </ul>
 
   <!-- Main Game Card -->
@@ -233,15 +187,42 @@
     <div class="header-bar">
       <div class="header-title">🕹️ Math Arcade ป.4</div>
       <div class="header-stats">
-        <div class="badge">⭐ คะแนนสะสม: <span id="total-score">14</span></div>
-        <button class="badge" onclick="resetGame()" style="border:none; cursor:pointer;">🏠 หน้าหลัก</button>
+        <div class="badge">⭐ คะแนนสะสม: <span id="total-score">0</span></div>
+        <button class="home-btn" onclick="showMainMenu()">🏠 หน้าหลัก</button>
       </div>
     </div>
 
-    <!-- Active Game View -->
-    <div id="game-view">
+    <!-- MAIN MENU VIEW -->
+    <div id="menu-view" class="menu-view">
+      <div class="menu-title">🎯 เลือกด่านเกมย่อยที่ต้องการเล่น</div>
+      <div class="game-grid">
+        <div class="menu-card" onclick="startGame('speed')">
+          <span class="icon">⚔️</span>
+          <span class="name">ตะลุยคิดเลขเร็ว</span>
+          <span style="font-size: 0.8rem; color: #64748b;">บวก/ลบ เลขหลายหลัก</span>
+        </div>
+        <div class="menu-card" onclick="startGame('multdiv')">
+          <span class="icon">✖️</span>
+          <span class="name">เซียนคูณหาร</span>
+          <span style="font-size: 0.8rem; color: #64748b;">คูณ/หาร ท้าทาย</span>
+        </div>
+        <div class="menu-card" onclick="startGame('compare')">
+          <span class="icon">⚖️</span>
+          <span class="name">เปรียบเทียบจำนวน</span>
+          <span style="font-size: 0.8rem; color: #64748b;">มากกว่า น้อยกว่า เท่ากับ</span>
+        </div>
+        <div class="menu-card" onclick="startGame('wordprob')">
+          <span class="icon">🧩</span>
+          <span class="name">โจทย์ปัญหาพาเพลิน</span>
+          <span style="font-size: 0.8rem; color: #64748b;">วิเคราะห์โจทย์ประยุกต์</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTIVE GAME VIEW -->
+    <div id="game-view" style="display: none;">
       <div class="status-bar">
-        <div>⚔️ ตะลุยด่านคิดเลขเร็ว</div>
+        <div id="mode-title">⚔️ ตะลุยด่านคิดเลขเร็ว</div>
         <div>ข้อที่ <span id="current-q">1</span> / 5</div>
         <div>คะแนน: <span id="current-score">0</span></div>
       </div>
@@ -250,89 +231,196 @@
         <div class="question-text" id="question-text">คำนวณผลบวก: ... = ?</div>
         <div class="monster-container">
           <span class="monster-icon">👾</span>
+          <!-- ซ่อนเฉลยแล้ว แสดงเฉพาะชื่อและ HP -->
           <span id="monster-text">ปีศาจดาวตก (HP 100%)</span>
         </div>
       </div>
 
       <div class="options-grid" id="options-container">
-        <!-- ปุ่มคำตอบจะถูกสร้างสุ่มโดย JS -->
+        <!-- ปุ่มคำตอบสุ่มโดย JS -->
       </div>
     </div>
 
-    <!-- Game Over Screen -->
+    <!-- GAME OVER SCREEN -->
     <div class="game-over-box" id="game-over-view">
       <h2>🎉 สรุปผลการเล่น!</h2>
       <p style="font-size: 1.25rem;">คุณทำได้ <span id="final-score" style="color:#6366f1; font-weight:bold;">0</span> / 5 คะแนน</p>
-      <button class="restart-btn" onclick="resetGame()">🔄 เล่นใหม่อีกครั้ง (สุ่มโจทย์ใหม่ไม่ซ้ำ)</button>
+      <button class="restart-btn" onclick="startGame(currentMode)">🔄 เล่นด่านนี้อีกครั้ง</button>
+      <button class="secondary-btn" onclick="showMainMenu()">🏠 ไปหน้าหลัก</button>
     </div>
   </div>
 
   <script>
+    let currentMode = 'speed';
     let currentQuestionIndex = 0;
     let score = 0;
-    let totalScore = 14;
+    let totalScore = 0;
     let questionsList = [];
 
-    // ตัวแปรสำหรับบันทึกโจทย์ที่เคยออกไปแล้ว ป้องกันการออกซ้ำทุกเกมย่อย
+    // บันทึกประวัติโจทย์ที่เคยออกไปแล้วทั้งหมด ป้องกันการซ้ำข้ามรอบ
     const usedQuestions = new Set();
-
     const monsterNames = ["ปีศาจดาวตก", "ปีศาจสายฟ้า", "ปีศาจวายุ", "ปีศาจไฟเยอร์", "ปีศาจคริสตัล"];
 
-    function generateRandomQuestions(count = 5) {
-      const questions = [];
-      let attempts = 0; // ตัวนับกันวนลูปไม่จบ
+    const modeTitles = {
+      'speed': '⚔️ ตะลุยด่านคิดเลขเร็ว',
+      'multdiv': '✖️ เซียนคูณหาร',
+      'compare': '⚖️ เปรียบเทียบจำนวน',
+      'wordprob': '🧩 โจทย์ปัญหาพาเพลิน'
+    };
 
-      while (questions.length < count && attempts < 1000) {
+    function showMainMenu() {
+      document.getElementById('menu-view').style.display = 'block';
+      document.getElementById('game-view').style.display = 'none';
+      document.getElementById('game-over-view').style.display = 'none';
+    }
+
+    function startGame(mode) {
+      currentMode = mode;
+      currentQuestionIndex = 0;
+      score = 0;
+      document.getElementById('mode-title').innerText = modeTitles[mode];
+      document.getElementById('current-score').innerText = score;
+      document.getElementById('menu-view').style.display = 'none';
+      document.getElementById('game-view').style.display = 'block';
+      document.getElementById('game-over-view').style.display = 'none';
+
+      questionsList = generateQuestionsForMode(mode, 5);
+      loadQuestion();
+    }
+
+    // ฟังก์ชันสร้างโจทย์สุ่มที่ไม่ซ้ำตามหมวดหมู่
+    function generateQuestionsForMode(mode, count = 5) {
+      const list = [];
+      let attempts = 0;
+
+      while (list.length < count && attempts < 1000) {
         attempts++;
-        const isAddition = Math.random() > 0.4;
-        let num1, num2, correctAnswer, qText, questionKey;
+        let qObj = null;
 
-        if (isAddition) {
-          num1 = Math.floor(Math.random() * 45 + 10) * 10000;
-          num2 = Math.floor(Math.random() * 25 + 5) * 5000;
-          correctAnswer = num1 + num2;
-          questionKey = `ADD_${num1}_${num2}`;
-          qText = `คำนวณผลบวก: ${num1.toLocaleString()} + ${num2.toLocaleString()} = ?`;
-        } else {
-          num1 = Math.floor(Math.random() * 40 + 20) * 10000;
-          num2 = Math.floor(Math.random() * 15 + 5) * 10000;
-          if (num1 < num2) [num1, num2] = [num2, num1];
-          correctAnswer = num1 - num2;
-          questionKey = `SUB_${num1}_${num2}`;
-          qText = `คำนวณผลลบ: ${num1.toLocaleString()} - ${num2.toLocaleString()} = ?`;
+        if (mode === 'speed') {
+          qObj = makeSpeedQuestion();
+        } else if (mode === 'multdiv') {
+          qObj = makeMultDivQuestion();
+        } else if (mode === 'compare') {
+          qObj = makeCompareQuestion();
+        } else if (mode === 'wordprob') {
+          qObj = makeWordProblem();
         }
 
-        // เช็คว่าโจทย์ข้อนี้เคยใช้ไปแล้วหรือยัง ถ้าเคยใช้แล้วให้สุ่มใหม่
-        if (usedQuestions.has(questionKey)) {
-          continue;
+        if (qObj && !usedQuestions.has(qObj.key)) {
+          usedQuestions.add(qObj.key);
+          qObj.monster = `${monsterNames[list.length % monsterNames.length]} (HP 100%)`;
+          list.push(qObj);
         }
+      }
+      return list;
+    }
 
-        // บันทึกว่าโจทย์นี้ถูกใช้งานแล้ว
-        usedQuestions.add(questionKey);
+    // 1. หมวดคิดเลขเร็ว (บวก/ลบ)
+    function makeSpeedQuestion() {
+      const isAdd = Math.random() > 0.5;
+      let n1 = Math.floor(Math.random() * 50 + 10) * 1000;
+      let n2 = Math.floor(Math.random() * 30 + 5) * 1000;
+      if (!isAdd && n1 < n2) [n1, n2] = [n2, n1];
 
-        // สุ่มตัวเลือกหลอก 3 ตัวที่ไม่ซ้ำกับเฉลย
-        const choicesSet = new Set([correctAnswer]);
-        const variations = [10000, -10000, 20000, -20000, 5000, -5000, 1000, -1000];
+      const ans = isAdd ? n1 + n2 : n1 - n2;
+      const key = `SPEED_${isAdd ? '+' : '-'}_${n1}_${n2}`;
+      const text = isAdd ? 
+        `คำนวณผลบวก: ${n1.toLocaleString()} + ${n2.toLocaleString()} = ?` : 
+        `คำนวณผลลบ: ${n1.toLocaleString()} - ${n2.toLocaleString()} = ?`;
 
-        while (choicesSet.size < 4) {
-          const offset = variations[Math.floor(Math.random() * variations.length)];
-          const wrongChoice = correctAnswer + offset;
-          if (wrongChoice > 0 && wrongChoice !== correctAnswer) {
-            choicesSet.add(wrongChoice);
-          }
-        }
+      const options = generateChoices(ans, [5000, -5000, 10000, -10000, 2000, -2000]);
+      return { key, question: text, correctAnswer: ans, options };
+    }
 
-        const options = Array.from(choicesSet).sort(() => Math.random() - 0.5);
+    // 2. หมวดคูณ/หาร
+    function makeMultDivQuestion() {
+      const isMult = Math.random() > 0.5;
+      let n1, n2, ans, text, key;
 
-        questions.push({
-          question: qText,
-          correctAnswer: correctAnswer,
-          options: options,
-          monster: `${monsterNames[questions.length % monsterNames.length]} (HP 100%)`
-        });
+      if (isMult) {
+        n1 = Math.floor(Math.random() * 80 + 12);
+        n2 = Math.floor(Math.random() * 40 + 5);
+        ans = n1 * n2;
+        key = `MULT_${n1}_${n2}`;
+        text = `หาผลคูณ: ${n1.toLocaleString()} × ${n2.toLocaleString()} = ?`;
+      } else {
+        n2 = Math.floor(Math.random() * 20 + 4);
+        ans = Math.floor(Math.random() * 50 + 10);
+        n1 = n2 * ans;
+        key = `DIV_${n1}_${n2}`;
+        text = `หาผลหาร: ${n1.toLocaleString()} ÷ ${n2.toLocaleString()} = ?`;
       }
 
-      return questions;
+      const options = generateChoices(ans, [10, -10, 20, -20, 100, -100, 5, -5]);
+      return { key, question: text, correctAnswer: ans, options };
+    }
+
+    // 3. หมวดเปรียบเทียบจำนวน
+    function makeCompareQuestion() {
+      const v1 = Math.floor(Math.random() * 80 + 10) * 100;
+      const v2 = Math.floor(Math.random() * 80 + 10) * 100;
+      const key = `COMP_${v1}_${v2}`;
+      const text = `เปรียบเทียบจำนวน: ${v1.toLocaleString()}  [ ? ]  ${v2.toLocaleString()}`;
+
+      let ans = "=";
+      if (v1 > v2) ans = ">";
+      if (v1 < v2) ans = "<";
+
+      return {
+        key,
+        question: text,
+        correctAnswer: ans,
+        options: [">", "<", "="]
+      };
+    }
+
+    // 4. หมวดโจทย์ปัญหา
+    function makeWordProblem() {
+      const templates = [
+        {
+          type: 'fruit',
+          gen: () => {
+            const a = Math.floor(Math.random() * 150 + 50) * 10;
+            const b = Math.floor(Math.random() * 80 + 20) * 10;
+            const ans = a + b;
+            return {
+              text: `ชาวสวนขายส้มได้ ${a.toLocaleString()} บาท และขายมะม่วงได้ ${b.toLocaleString()} บาท รวมเป็นเงินกี่บาท?`,
+              ans,
+              key: `WORD_FRUIT_${a}_${b}`
+            };
+          }
+        },
+        {
+          type: 'book',
+          gen: () => {
+            const total = Math.floor(Math.random() * 300 + 100) * 10;
+            const spent = Math.floor(Math.random() * 80 + 20) * 10;
+            const ans = total - spent;
+            return {
+              text: `นักเรียนมีเงิน ${total.toLocaleString()} บาท ซื้อหนังสือไป ${spent.toLocaleString()} บาท จะเหลือเงินกี่บาท?`,
+              ans,
+              key: `WORD_BOOK_${total}_${spent}`
+            };
+          }
+        }
+      ];
+
+      const chosen = templates[Math.floor(Math.random() * templates.length)].gen();
+      const options = generateChoices(chosen.ans, [100, -100, 200, -200, 50, -50]);
+      return { key: chosen.key, question: chosen.text, correctAnswer: chosen.ans, options };
+    }
+
+    // ฟังก์ชันช่วยสุ่มตัวเลือกหลอก
+    function generateChoices(correctAns, offsets) {
+      if (typeof correctAns === 'string') return [correctAns];
+      const set = new Set([correctAns]);
+      while (set.size < 4) {
+        const off = offsets[Math.floor(Math.random() * offsets.length)];
+        const wrong = correctAns + off;
+        if (wrong > 0 && wrong !== correctAns) set.add(wrong);
+      }
+      return Array.from(set).sort(() => Math.random() - 0.5);
     }
 
     function loadQuestion() {
@@ -349,11 +437,14 @@
       const optionsContainer = document.getElementById('options-container');
       optionsContainer.innerHTML = '';
 
-      q.options.forEach(optionVal => {
+      // ปรับจำนวนคอลัมน์ปุ่มถ้ารูปแบบคำตอบเป็นเครื่องหมายเปรียบเทียบ
+      optionsContainer.style.gridTemplateColumns = q.options.length === 3 ? '1fr 1fr 1fr' : '1fr 1fr';
+
+      q.options.forEach(opt => {
         const btn = document.createElement('button');
         btn.className = 'option-btn';
-        btn.innerText = optionVal.toLocaleString();
-        btn.onclick = () => checkAnswer(optionVal, q.correctAnswer);
+        btn.innerText = typeof opt === 'number' ? opt.toLocaleString() : opt;
+        btn.onclick = () => checkAnswer(opt, q.correctAnswer);
         optionsContainer.appendChild(btn);
       });
     }
@@ -375,20 +466,8 @@
       document.getElementById('final-score').innerText = score;
     }
 
-    function resetGame() {
-      currentQuestionIndex = 0;
-      score = 0;
-      document.getElementById('current-score').innerText = score;
-      document.getElementById('game-view').style.display = 'block';
-      document.getElementById('game-over-view').style.display = 'none';
-      
-      // สุ่มชุดโจทย์ใหม่ที่การันตีว่าไม่ซ้ำกับเกมย่อยที่ผ่านๆ มา
-      questionsList = generateRandomQuestions(5);
-      loadQuestion();
-    }
-
-    // เริ่มเกมครั้งแรก
-    resetGame();
+    // เริ่มต้นแสดงหน้าเลือกเกม
+    showMainMenu();
   </script>
 </body>
 </html>
